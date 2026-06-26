@@ -1,12 +1,27 @@
 from __future__ import annotations
 
+from datetime import date
 from dataclasses import dataclass, field
+from enum import Enum
+
+
+class DaytimePreference(str, Enum):
+    DAYTIME = "daytime"
+    AFTERNOON = "afternoon"
+    NIGHTTIME = "nighttime"
+
+
+class TaskPriority(str, Enum):
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
 
 
 @dataclass
 class Owner:
     name: str
-    preferences: list[str] = field(default_factory=list)
+    preference: DaytimePreference = DaytimePreference.DAYTIME
+    pets: list[Pet] = field(default_factory=list)
 
 
 @dataclass
@@ -21,10 +36,13 @@ class Pet:
 @dataclass
 class Task:
     duration_minutes: int
-    priority: str
+    priority: TaskPriority
     title: str
     pet: Pet
     completed: bool = False
+
+    def validate_task(self) -> bool:
+        raise NotImplementedError
 
     def complete_task(self) -> None:
         raise NotImplementedError
@@ -32,6 +50,9 @@ class Task:
 
 @dataclass
 class DailySchedule:
+    owner: Owner
+    schedule_date: date
+    available_minutes: int
     tasks: list[Task] = field(default_factory=list)
 
     def generate_schedule(self) -> list[Task]:

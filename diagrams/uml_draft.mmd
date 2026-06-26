@@ -1,7 +1,22 @@
 classDiagram
+    class DaytimePreference {
+        <<enumeration>>
+        DAYTIME
+        AFTERNOON
+        NIGHTTIME
+    }
+
+    class TaskPriority {
+        <<enumeration>>
+        HIGH
+        MEDIUM
+        LOW
+    }
+
     class Owner {
         +str name
-        +list~str~ preferences
+        +DaytimePreference preference
+        +list~Pet~ pets
     }
 
     class Pet {
@@ -14,7 +29,7 @@ classDiagram
 
     class Task {
         +int duration_minutes
-        +str priority
+        +TaskPriority priority
         +str title
         +Pet pet
         +bool completed
@@ -22,10 +37,16 @@ classDiagram
     }
 
     class DailySchedule {
+        +Owner owner
+        +date schedule_date
+        +int available_minutes
         +list~Task~ tasks
         +generate_schedule() list~Task~
     }
 
+    Owner "1" --> "1" DaytimePreference : preference
     Owner "1" --> "1..*" Pet : has
-    Pet "1" --> "1..*" Task : assigned
+    Pet "1" --> "0..*" Task : assigned
+    Task "1" --> "1" TaskPriority : priority
+    DailySchedule "1" --> "1" Owner : for
     DailySchedule "1" --> "0..*" Task : includes

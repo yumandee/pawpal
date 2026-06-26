@@ -36,6 +36,13 @@ The initial UML design should have the following classes and their respective at
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
 
+In asking the agent to identify any missing relationships or bottlenecks, it pointed out several things.
+
+1. Pets belong to an owner, but there is no reverse where Owners have a list of Pets. This was added during implementation.
+2. The DailySchedule was further improved by associating it to an owner, a date, and the possible amount of available minutes.
+3. The priority for a task was suggested to be changed from a generic string to a Enum with "High", "Medium", "Low" priorities.
+4. This then inspired me to adjust the Owner preferences from a list of a strings to a more specific daytime preference enum.
+
 ---
 
 ## 2. Scheduling Logic and Tradeoffs

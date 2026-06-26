@@ -1,0 +1,31 @@
+classDiagram
+    class Owner {
+        +str name
+        +list~str~ preferences
+    }
+
+    class Pet {
+        +Owner owner
+        +str name
+        +str species
+        +str breed
+        +int age
+    }
+
+    class Task {
+        +int duration_minutes
+        +str priority
+        +str title
+        +Pet pet
+        +bool completed
+        +complete_task() void
+    }
+
+    class DailySchedule {
+        +list~Task~ tasks
+        +generate_schedule() list~Task~
+    }
+
+    Owner "1" --> "1..*" Pet : has
+    Pet "1" --> "1..*" Task : assigned
+    DailySchedule "1" --> "0..*" Task : includes

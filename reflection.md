@@ -2,10 +2,34 @@
 
 ## 1. System Design
 
+### Core actions
+
+In this PawPal application, a user should be able to perform at least the following actions:
+
+- enter owner and pet info
+- schedule tasks
+- track daily pet tasks
+
 **a. Initial design**
 
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
+
+The initial UML design should have the following classes and their respective attributes and methods:
+
+- Owner
+  - attributes: name (str), preferences (str[])
+  - relationships: an owner can have one or more pets,
+- Pet
+  - attributes: owner (Owner), name (str), species (cat/dog/lizard/etc -- str), breed (tabby/retriever/etc -- str), age (int)
+  - relationships: a pet belongs to an owner , a pet can be associated to one or more tasks
+- Task
+  - attributes: duration in minutse(int), priority (high/med/low -- str), description/type (walk/grooming/meds -- str), pet (Pet), completed (boolean)
+  - methods: complete_task()
+- Daily Schedule ? - should be auto generated/calculated not rly stored
+  - attributes: tasks (Task[])
+  - relationships: a schedule can have zero or more tasks
+  - methods: generate_schedule()
 
 **b. Design changes**
 

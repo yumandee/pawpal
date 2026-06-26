@@ -42,6 +42,7 @@ In asking the agent to identify any missing relationships or bottlenecks, it poi
 2. The DailySchedule was further improved by associating it to an owner, a date, and the possible amount of available minutes.
 3. The priority for a task was suggested to be changed from a generic string to a Enum with "High", "Medium", "Low" priorities.
 4. This then inspired me to adjust the Owner preferences from a list of a strings to a more specific daytime preference enum.
+5. Added a list of a pets to a Task so that Tasks can be completed for one or more pets (feeding all pets at the same time)
 
 ---
 

@@ -13,10 +13,19 @@ classDiagram
         LOW
     }
 
+    class TaskFrequency {
+        <<enumeration>>
+        DAILY
+        WEEKLY
+        AS_NEEDED
+    }
+
     class Owner {
         +str name
         +DaytimePreference preference
         +list~Pet~ pets
+        +add_pet(pet: Pet) void
+        +get_all_tasks() list~Task~
     }
 
     class Pet {
@@ -25,28 +34,32 @@ classDiagram
         +str species
         +str breed
         +int age
+        +list~Task~ tasks
+        +add_task(task: Task) void
+        +pending_tasks() list~Task~
     }
 
     class Task {
+        +str description
         +int duration_minutes
+        +TaskFrequency frequency
         +TaskPriority priority
-        +str title
-        +Pet pet
         +bool completed
+        +validate_task() bool
         +complete_task() void
     }
 
-    class DailySchedule {
+    class Scheduler {
         +Owner owner
-        +date schedule_date
-        +int available_minutes
-        +list~Task~ tasks
-        +generate_schedule() list~Task~
+        +retrieve_tasks() list~Task~
+        +pending_tasks() list~Task~
+        +organize_tasks() list~Task~
+        +build_plan(available_minutes: int) list~Task~
     }
 
     Owner "1" --> "1" DaytimePreference : preference
     Owner "1" --> "1..*" Pet : has
-    Pet "1" --> "0..*" Task : assigned
+    Pet "1" --> "0..*" Task : has
+    Task "1" --> "1" TaskFrequency : frequency
     Task "1" --> "1" TaskPriority : priority
-    DailySchedule "1" --> "1" Owner : for
-    DailySchedule "1" --> "0..*" Task : includes
+    Scheduler "1" --> "1" Owner : manages

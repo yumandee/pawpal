@@ -29,10 +29,12 @@ class Owner:
     pets: list[Pet] = field(default_factory=list)
 
     def add_pet(self, pet: Pet) -> None:
+        """Add a pet to the owner's pet list if it is not already present."""
         if pet not in self.pets:
             self.pets.append(pet)
 
     def get_all_tasks(self) -> list[Task]:
+        """Return all tasks assigned across the owner's pets."""
         tasks: list[Task] = []
         for pet in self.pets:
             tasks.extend(pet.tasks)
@@ -49,13 +51,16 @@ class Pet:
     tasks: list[Task] = field(default_factory=list)
 
     def __post_init__(self) -> None:
+        """Register this pet with its owner after initialization."""
         self.owner.add_pet(self)
 
     def add_task(self, task: Task) -> None:
+        """Add a task to this pet if it is not already assigned."""
         if task not in self.tasks:
             self.tasks.append(task)
 
     def pending_tasks(self) -> list[Task]:
+        """Return this pet's incomplete tasks."""
         return [task for task in self.tasks if not task.completed]
 
 
@@ -69,6 +74,7 @@ class Task:
     pets: list[Pet] = field(default_factory=list)
 
     def __post_init__(self) -> None:
+        """Validate the task and attach it to any provided pets."""
         self.validate_task()
         if self.pets:
             for pet in self.pets:
@@ -88,6 +94,7 @@ class Task:
         return True
 
     def complete_task(self) -> None:
+        """Mark this task as completed."""
         self.completed = True
 
 
@@ -103,12 +110,15 @@ class Scheduler:
     owner: Owner
 
     def retrieve_tasks(self) -> list[Task]:
+        """Return all tasks available for this scheduler's owner."""
         return self.owner.get_all_tasks()
 
     def pending_tasks(self) -> list[Task]:
+        """Return all incomplete tasks for this scheduler's owner."""
         return [task for task in self.retrieve_tasks() if not task.completed]
 
     def organize_tasks(self) -> list[Task]:
+        """Sort pending tasks by priority and then by duration."""
         priority_order = {
             TaskPriority.HIGH: 0,
             TaskPriority.MEDIUM: 1,
@@ -120,6 +130,7 @@ class Scheduler:
         )
 
     def _preferred_start_minutes(self) -> int:
+        """Return the preferred schedule start time in minutes."""
         return {
             DaytimePreference.DAYTIME: 7 * 60,
             DaytimePreference.AFTERNOON: 12 * 60,
@@ -127,6 +138,7 @@ class Scheduler:
         }[self.owner.preference]
 
     def _preferred_end_minutes(self) -> int:
+        """Return the preferred schedule end time in minutes."""
         return {
             DaytimePreference.DAYTIME: 12 * 60,
             DaytimePreference.AFTERNOON: 17 * 60,
@@ -135,6 +147,7 @@ class Scheduler:
 
     @staticmethod
     def _format_minutes(total_minutes: int) -> str:
+        """Convert minutes since midnight into a 12-hour time string."""
         total_minutes = max(0, total_minutes)
         hours = (total_minutes // 60) % 24
         minutes = total_minutes % 60
@@ -147,6 +160,7 @@ class Scheduler:
         return f"{display_hour}:{minutes:02d} {suffix}"
 
     def generate_schedule(self) -> list[ScheduledTask]:
+        """Generate a scheduled sequence for the owner's pending tasks."""
         tasks = self.organize_tasks()
         if not tasks:
             return []

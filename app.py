@@ -150,7 +150,9 @@ if st.session_state.owner.pets:
         add_task_clicked = st.form_submit_button("Add task")
 
     if add_task_clicked:
-        if not selected_pet_labels:
+        if not task_description.strip():
+            st.error("Please provide a task description.")
+        elif not selected_pet_labels:
             st.error("Select at least one pet for this task.")
         else:
             selected_pets = [pet_options[label] for label in selected_pet_labels]

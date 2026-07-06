@@ -84,8 +84,6 @@ tests/test_pawpal.py ..                                          [100%]
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature           | Method(s)                                                                                                      | Notes |
 | ----------------- | -------------------------------------------------------------------------------------------------------------- | ----- |
 | Task sorting      | by priority and daytime preference                                                                             |
@@ -104,5 +102,3 @@ Describe your app in numbered steps so a reader can follow along without watchin
 6. Create a task and associate it to one or more pets
 7. Create more tasks as needed
 8. Generate schedule from tasks provided
-
-**Screenshot or video** _(optional)_: <!-- Insert a screenshot or link to a demo video here -->

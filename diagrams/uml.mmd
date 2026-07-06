@@ -45,8 +45,16 @@ classDiagram
         +TaskFrequency frequency
         +TaskPriority priority
         +bool completed
+        +list~Pet~ pets
+        +__post_init__() void
         +validate_task() bool
         +complete_task() void
+    }
+
+    class ScheduledTask {
+        +Task task
+        +str scheduled_start
+        +str scheduled_end
     }
 
     class Scheduler {
@@ -54,12 +62,17 @@ classDiagram
         +retrieve_tasks() list~Task~
         +pending_tasks() list~Task~
         +organize_tasks() list~Task~
-        +build_plan(available_minutes: int) list~Task~
+        +_preferred_start_minutes() int
+        +_preferred_end_minutes() int
+        +_format_minutes(total_minutes: int) str
+        +generate_schedule() list~ScheduledTask~
     }
 
     Owner "1" --> "1" DaytimePreference : preference
-    Owner "1" --> "1..*" Pet : has
-    Pet "1" --> "0..*" Task : has
+    Owner "1" --> "0..*" Pet : has
+    Pet "0..*" --> "0..*" Task : assigned
     Task "1" --> "1" TaskFrequency : frequency
     Task "1" --> "1" TaskPriority : priority
     Scheduler "1" --> "1" Owner : manages
+    Scheduler "1" --> "0..*" ScheduledTask : generates
+    ScheduledTask "1" --> "1" Task : wraps

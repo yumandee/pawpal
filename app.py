@@ -197,24 +197,30 @@ unique_tasks = list({id(task): task for task in all_tasks}.values())
 if "generated_schedule" not in st.session_state:
     st.session_state.generated_schedule = []
 
-if unique_tasks:
-    if st.button("Generate schedule"):
+schedule_button_label = (
+    "Regenerate schedule"
+    if st.session_state.generated_schedule
+    else "Generate schedule"
+)
+
+if st.button(schedule_button_label):
+    if not unique_tasks:
+        st.warning("Add at least one task before generating a schedule.")
+    else:
         scheduler = Scheduler(owner=st.session_state.owner)
         st.session_state.generated_schedule = scheduler.generate_schedule()
 
-    if st.session_state.generated_schedule:
-        st.write("Generated schedule:")
-        st.table(
-            [
-                {
-                    "Task": scheduled_task.task.description,
-                    "Start": scheduled_task.scheduled_start,
-                    "End": scheduled_task.scheduled_end,
-                    "Priority": scheduled_task.task.priority.value,
-                    "Pets": ", ".join(pet.name for pet in scheduled_task.task.pets),
-                }
-                for scheduled_task in st.session_state.generated_schedule
-            ]
-        )
-else:
-    st.info("Add at least one task before generating a schedule.")
+if st.session_state.generated_schedule:
+    st.write("Generated schedule:")
+    st.table(
+        [
+            {
+                "Task": scheduled_task.task.description,
+                "Start": scheduled_task.scheduled_start,
+                "End": scheduled_task.scheduled_end,
+                "Priority": scheduled_task.task.priority.value,
+                "Pets": ", ".join(pet.name for pet in scheduled_task.task.pets),
+            }
+            for scheduled_task in st.session_state.generated_schedule
+        ]
+    )

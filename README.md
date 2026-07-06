@@ -70,27 +70,39 @@ Sample test output:
 
 ```
 # Paste your pytest output here
+========================= test session starts ==========================
+platform darwin -- Python 3.13.13, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/mandee/codepath/pawpal
+configfile: pytest.ini
+plugins: anyio-4.14.1
+collected 2 items
+
+tests/test_pawpal.py ..                                          [100%]
+
+========================== 2 passed in 0.01s ===========================
 ```
 
 ## 📐 Smarter Scheduling
 
 > Fill in once you've implemented scheduling logic.
 
-| Feature           | Method(s) | Notes                             |
-| ----------------- | --------- | --------------------------------- |
-| Task sorting      |           | e.g., by priority, duration       |
-| Filtering         |           | e.g., skip tasks if time runs out |
-| Conflict handling |           | e.g., overlapping time slots      |
-| Recurring tasks   |           | e.g., daily vs. weekly            |
+| Feature           | Method(s)                                                                                                      | Notes |
+| ----------------- | -------------------------------------------------------------------------------------------------------------- | ----- |
+| Task sorting      | by priority and daytime preference                                                                             |
+| Filtering         | skip tasks if time runs out                                                                                    |       |
+| Conflict handling | after daytime preference fulfilled and there are remaining tasks, add tasks starting from preference and prior |       |
 
 ## 📸 Demo Walkthrough
 
 Describe your app in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Enter owner name
+2. Select owner daytime preference (daytime, afternoon, nighttime) from dropdown
+3. Enter pet information (name, species, & age required, breed optional)
+4. Add pet
+5. See pet and information in table
+6. Create a task and associate it to one or more pets
+7. Create more tasks as needed
+8. Generate schedule from tasks provided
 
 **Screenshot or video** _(optional)_: <!-- Insert a screenshot or link to a demo video here -->

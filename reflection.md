@@ -106,10 +106,16 @@ I'm confident that the scheduler works in scheduling tasks based on daytime pref
 
 - What part of this project are you most satisfied with?
 
+Building the UI portion from the already working program (after testing with main.py) was a very smooth process and it was very cool to have AI make the program instantaneously.
+
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
 
+The current scheduler only show the schedule for today. I would add in the features to complete and edit tasks and generate weekly schedules in another iteration of working on this.
+
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+
+When working with projects from scratch, having a uml generated is very easy to get started with AI and brianstorming ideas and catching any edge cases before building anything.
